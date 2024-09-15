@@ -28,14 +28,6 @@
   font-style: italic;
 }
 
-.form {
-  justify-content: center;
-  padding-left: 30%;
-  padding-right: 30%;
-}
-.ul{
-  list-style: none;
-}
-.li{
-  margin: 20px;
+input, label, button {
+  margin-left: 10px;
 }
