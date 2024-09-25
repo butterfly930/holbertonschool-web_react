@@ -5,10 +5,10 @@
 	margin-top: 12px;
 }
 
-li[data-priority="default"] {
+li[data-priority-type="default"] {
 	color: blue;
 }
 
-li[data-priority="urgent"] {
+li[data-priority-type="urgent"] {
 	color: red;
 }
