@@ -10,7 +10,7 @@ describe("<App />", () => {
     expect(wrapper.exists()).toEqual(true);
   });
 
-  it('Verify if CourseList is displayed when isLoggedIn is false', () => {
+  it('Verify if CourseList is displayed when isLoggedIn is true', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find(CourseList)).toHaveLength(0);
   });
