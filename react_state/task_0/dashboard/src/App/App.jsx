@@ -1,14 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { css, StyleSheet } from 'aphrodite';
 import Notifications from "../Notifications/Notifications";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Login from "../Login/Login";
-import "./App.css";
 import CourseList from "../CourseList/CourseList";
 import { getLatestNotification } from "../utils/utils";
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from "../BodySection/BodySection";
+
 
 const listCourses = [
   {id: 1, name: 'ES6', credit: 60},
@@ -22,36 +23,73 @@ const listNotifications = [
   {id: 3, type: 'urgent', html: { __html: getLatestNotification() }}
 ]
 
+const styles = StyleSheet.create({
+  app: {
+    borderBottom: "3px solid #e14852",
+    width: "100%"
+  },
+  bodySmall: {
+    marginBottom: '150px',
+    textAlign: 'left',
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  footer: {
+    borderTop: "3px solid #e14852",
+    display: "flex",
+    justifyContent: "center",
+    fontStyle: "italic",
+    width: "100%"
+  }
+})
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.handlePress = this.handlePress.bind(this)
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this)
+    this.handleHideDrawer = this.handleHideDrawer.bind(this)
+    this.state = {
+      displayDrawer: false
+    }
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.handlePress)
+    window.addEventListener('keydown', this.handlePress)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handlePress)
+    window.removeEventListener('keydown', this.handlePress)
   }
 
   handlePress(event) {
     if (event.ctrlKey && event.key === 'h') {
-      event.preventDefault();
       alert('Logging you out');
       this.props.logOut()
     }
   }
 
+  handleDisplayDrawer() {
+    this.setState({
+      displayDrawer: true
+    })
+  }  
+
+  handleHideDrawer() {
+    this.setState({
+      displayDrawer: false
+    })
+  }
+
   render () {
+    const { displayDrawer } = this.state
     return(  
     <>
-      <Notifications listNotifications={listNotifications}/>
-      <div className="App">
+      <Notifications listNotifications={listNotifications} displayDrawer={displayDrawer} handleDisplayDrawer={this.handleDisplayDrawer} handleHideDrawer={this.handleHideDrawer} />
+      <div className={css(styles.app)}>
         <Header />
       </div>
-      <div className="App-body">
+      <div className={css(styles.body, styles.bodySmall)}>
         {!this.props.isLoggedIn ? 
           <BodySectionWithMarginBottom title="Log in to continue">
             <Login /> 
@@ -61,10 +99,10 @@ class App extends React.Component {
           </BodySectionWithMarginBottom>
         }
         <BodySection title="News from the School">
-          <p>Holberton School News goes here</p>
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere, temporibus. Totam, quis quo provident magni reprehenderit nulla eaque. A, illo?</p>
         </BodySection>
       </div>
-      <div className="App-footer">
+      <div className={css(styles.footer)}>
         <Footer />
       </div>
     </>
